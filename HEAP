@@ -1,0 +1,56 @@
+class MinHeap:
+     def __init__(obj):
+        obj.heap=[]
+     def parent(obj,location):
+        return(location-1)>>1
+     def left(obj,location):
+        return (location<< 1)+1
+     def right(obj,location):
+        return (location << 1)+ 2
+
+     def build_min_heap(obj,arr):
+      obj.heap=arr[:]
+      heap_size=len(obj.heap)
+      for location in range(heap_size//2- 1, -1,-1):
+         obj.heapify(location)
+
+     def heapify(obj,location):
+        smallest= location
+        left_location=obj.left(location)
+        right_location=obj.right(location)
+        if left_location<len(obj.heap):
+          if obj.heap[left_location]< obj.heap[smallest]:
+              smallest =left_location
+        if right_location<len(obj.heap):
+          if obj.heap[right_location]<obj.heap[smallest]:
+             smallest =right_location
+        if smallest!= location:
+            obj.heap[location],obj.heap[smallest] =obj.heap[smallest],obj.heap[location]
+            obj.heapify(smallest)
+     def pop_root(obj):
+        if not obj.heap:
+            return None
+        root = obj.heap[0]
+        obj.heap[0] = obj.heap[-1]
+        obj.heap.pop()
+        if obj.heap:
+            obj.heapify(0)
+        return root
+
+if __name__ == "__main__":
+    min_heap= MinHeap()
+    # for negative numbers
+    min_heap.build_min_heap([-22,-23,-20,1,-2])
+    print("Heap for Negative Integers:",min_heap.heap)
+    print("Extracted minimum element :",min_heap.pop_root())
+    print("Heap after Root Retraction:",min_heap.heap)
+    # for floats
+    min_heap.build_min_heap([2.3,-2.1,5.9,1.0,0.3])
+    print("\nHeap for Floats:",min_heap.heap)
+    print("Extracted minimum element:",min_heap.pop_root())
+    print("Heap after Root Retraction:",min_heap.heap)
+    # for strings
+    min_heap.build_min_heap(['ducati','benz','mustang','lambo'])
+    print("\nHeap for strings:",min_heap.heap)
+    print("Extracted minimum element:",min_heap.pop_root())
+    print("Heap after Root Retraction:",min_heap.heap)
